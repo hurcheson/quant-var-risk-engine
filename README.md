@@ -57,7 +57,7 @@ $$
 ### 2. Value-at-Risk (VaR)
 
 $$
-\text{VaR}_{\alpha}(L) = \inf \left\{ l \in \mathbb{R} : P(L \gt l) \le 1 - \alpha \right\} = \text{Percentile}(L, \alpha)
+\text{VaR}_{\alpha}(L) = \inf \left\lbrace l \in \mathbb{R} : P(L > l) \le 1 - \alpha \right\rbrace = \text{Percentile}(L, \alpha)
 $$
 
 ### 3. Conditional Value-at-Risk (CVaR / Expected Shortfall)

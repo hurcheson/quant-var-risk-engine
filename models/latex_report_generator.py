@@ -9,7 +9,7 @@ def get_gbm_latex() -> str:
 
 def get_var_latex() -> str:
     """Returns LaTeX equation string for Value-at-Risk (VaR)."""
-    return r"\text{VaR}_{\alpha}(L) = \inf \left\{ l \in \mathbb{R} : P(L \gt l) \le 1 - \alpha \right\} = \text{Percentile}(L, \alpha)"
+    return r"\text{VaR}_{\alpha}(L) = \inf \left\lbrace l \in \mathbb{R} : P(L > l) \le 1 - \alpha \right\rbrace = \text{Percentile}(L, \alpha)"
 
 def get_cvar_latex() -> str:
     """Returns LaTeX equation string for Conditional Value-at-Risk (CVaR / Expected Shortfall)."""
@@ -83,7 +83,7 @@ S_T = S_0 \exp\left( \left(\mu - \frac{{1}}{{2}}\sigma^2\right)T + \sigma \sqrt{
 \subsection{{Value-at-Risk (VaR)}}
 Value-at-Risk at confidence level $\alpha = {conf_level_val}$ represents the maximum expected loss over time horizon $T$:
 \begin{{equation}}
-\text{{VaR}}_{{\alpha}}(L) = \inf \left\{{ l \in \mathbb{{R}} : P(L > l) \le 1 - \alpha \right\}}
+\text{{VaR}}_{{\alpha}}(L) = \inf \left\lbrace l \in \mathbb{{R}} : P(L > l) \le 1 - \alpha \right\rbrace
 \end{{equation}}
 
 \subsection{{Conditional Value-at-Risk (CVaR)}}
