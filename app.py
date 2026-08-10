@@ -5,6 +5,12 @@ import plotly.express as px
 import plotly.graph_objects as go
 from data.fetch_market_data import fetch_synthetic_portfolio_data
 from models.monte_carlo_engine import MonteCarloVaREngine
+from models.latex_report_generator import (
+    LaTeXReportGenerator,
+    get_gbm_latex,
+    get_var_latex,
+    get_cvar_latex
+)
 
 st.set_page_config(page_title="Monte Carlo Portfolio Risk Engine", layout="wide", page_icon="📈")
 
@@ -31,6 +37,19 @@ engine = MonteCarloVaREngine(
 )
 sim_res = engine.simulate_gbm(returns_df, num_simulations=num_sims)
 
+# LaTeX Report Exporter in Sidebar
+report_gen = LaTeXReportGenerator(sim_res, portfolio_val)
+tex_report = report_gen.generate_tex_document()
+
+st.sidebar.markdown("---")
+st.sidebar.subheader("📄 Export LaTeX Report")
+st.sidebar.download_button(
+    label="Download LaTeX Risk Report (.tex)",
+    data=tex_report,
+    file_name=f"portfolio_risk_report_{int(conf_level*100)}conf_{time_horizon}d.tex",
+    mime="text/x-tex"
+)
+
 # Summary Key Performance Indicators (KPIs)
 col1, col2, col3, col4 = st.columns(4)
 col1.metric("Portfolio Value", f"${portfolio_val:,.2f}")
@@ -40,7 +59,11 @@ col4.metric("Annualized Volatility", f"{sim_res['volatility'] * np.sqrt(252):.2%
 
 st.markdown("---")
 
-tab1, tab2 = st.tabs(["Monte Carlo Simulation & Distribution", "Market Data & Portfolio Analytics"])
+tab1, tab2, tab3 = st.tabs([
+    "Monte Carlo Simulation & Distribution",
+    "Market Data & Portfolio Analytics",
+    "Mathematical Framework & LaTeX"
+])
 
 with tab1:
     st.subheader("Simulated Portfolio Loss Distribution")
@@ -73,5 +96,29 @@ with tab2:
         fig_corr = px.imshow(corr_matrix, text_auto=True, color_continuous_scale="Viridis", title="Asset Returns Correlation Matrix")
         st.plotly_chart(fig_corr, use_container_width=True)
 
+with tab3:
+    st.subheader("Mathematical Formulations & Quantitative Models (LaTeX)")
+    st.markdown("This section details the stochastic differential equations and risk formulations implemented in the engine.")
+
+    st.markdown("### 1. Geometric Brownian Motion (GBM)")
+    st.markdown("Asset price paths are simulated according to the Geometric Brownian Motion stochastic differential equation:")
+    st.latex(r"dS_t = \mu S_t dt + \sigma S_t dW_t")
+    st.markdown("The discrete exact solution over horizon $T$ is evaluated as:")
+    st.latex(get_gbm_latex())
+
+    st.markdown("### 2. Value-at-Risk (VaR)")
+    st.markdown("Value-at-Risk quantifies the maximum loss expected over horizon $T$ at confidence level $\\alpha$:")
+    st.latex(get_var_latex())
+
+    st.markdown("### 3. Conditional Value-at-Risk (CVaR / Expected Shortfall)")
+    st.markdown("Expected Shortfall measures the expected tail loss given that loss exceeds the VaR threshold:")
+    st.latex(get_cvar_latex())
+
+    st.markdown("---")
+    st.markdown("### Standalone LaTeX Document Preview")
+    with st.expander("Show Generated TeX Report Markup"):
+        st.code(tex_report, language="latex")
+
 st.success("Monte Carlo Portfolio Risk Engine Execution Complete.")
+
 
