@@ -9,7 +9,7 @@ def get_gbm_latex() -> str:
 
 def get_var_latex() -> str:
     """Returns LaTeX equation string for Value-at-Risk (VaR)."""
-    return r"\text{VaR}_{\alpha}(L) = \inf \left\{ l \in \mathbb{R} : P(L > l) \le 1 - \alpha \right\} = \text{Percentile}(L, \alpha)"
+    return r"\text{VaR}_{\alpha}(L) = \inf \left\{ l \in \mathbb{R} : P(L \gt l) \le 1 - \alpha \right\} = \text{Percentile}(L, \alpha)"
 
 def get_cvar_latex() -> str:
     """Returns LaTeX equation string for Conditional Value-at-Risk (CVaR / Expected Shortfall)."""

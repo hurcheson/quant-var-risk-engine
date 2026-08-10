@@ -43,16 +43,28 @@ streamlit run app.py
 
 ### 1. Geometric Brownian Motion (GBM)
 Portfolio asset prices follow stochastic continuous dynamics:
-$$dS_t = \mu S_t dt + \sigma S_t dW_t$$
+
+$$
+dS_t = \mu S_t dt + \sigma S_t dW_t
+$$
 
 The discrete path solution over time horizon $T$ is given by:
-$$S_T = S_0 \exp\left( \left(\mu - \frac{1}{2}\sigma^2\right)T + \sigma \sqrt{T} Z \right), \quad Z \sim \mathcal{N}(0, 1)$$
+
+$$
+S_T = S_0 \exp\left( \left(\mu - \frac{1}{2}\sigma^2\right)T + \sigma \sqrt{T} Z \right), \quad Z \sim \mathcal{N}(0, 1)
+$$
 
 ### 2. Value-at-Risk (VaR)
-$$\text{VaR}_{\alpha}(L) = \inf \left\{ l \in \mathbb{R} : P(L > l) \le 1 - \alpha \right\} = \text{Percentile}(L, \alpha)$$
+
+$$
+\text{VaR}_{\alpha}(L) = \inf \left\{ l \in \mathbb{R} : P(L \gt l) \le 1 - \alpha \right\} = \text{Percentile}(L, \alpha)
+$$
 
 ### 3. Conditional Value-at-Risk (CVaR / Expected Shortfall)
-$$\text{CVaR}_{\alpha}(L) = \mathbb{E}\left[ L \mid L \ge \text{VaR}_{\alpha}(L) \right]$$
+
+$$
+\text{CVaR}_{\alpha}(L) = \mathbb{E}\left[ L \mid L \ge \text{VaR}_{\alpha}(L) \right]
+$$
 
 ---
 
